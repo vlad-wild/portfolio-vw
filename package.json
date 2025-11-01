@@ -1,11 +1,45 @@
 {
-  "name": "portfolio-vw",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+    "name": "portfolio-vw",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "webpack",
+        "serve": "webpack serve"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@tsparticles/slim": "^3.9.1",
+        "@tsparticles/vue3": "^3.0.1",
+        "animejs": "^4.2.2",
+        "tsparticles-engine": "^2.12.0",
+        "vue": "^3.5.22"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.28.5",
+        "@babel/preset-env": "^7.28.5",
+        "@svgr/webpack": "^8.1.0",
+        "@swc/core": "^1.14.0",
+        "@types/webpack-env": "^1.18.8",
+        "babel-loader": "^10.0.0",
+        "css-loader": "^7.1.2",
+        "html-webpack-plugin": "^5.6.4",
+        "pinia": "^3.0.3",
+        "sass": "^1.93.3",
+        "sass-loader": "^16.0.6",
+        "style-loader": "^4.0.0",
+        "svg-vue3-loader": "^1.0.2",
+        "swc-loader": "^0.2.6",
+        "terser-webpack-plugin": "^5.3.14",
+        "ts-loader": "^9.5.4",
+        "typescript": "^5.9.3",
+        "vue-loader": "^17.4.2",
+        "vue-router": "^4.6.3",
+        "webpack": "^5.102.1",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-server": "^5.2.2",
+        "webpack-env": "^0.8.0"
+    }
 }
