@@ -5,62 +5,60 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
     mode: "development",
+    target: "browserslist",
+    entry: "./src/index.ts",
+    output: {
+        filename: "js/[name].[contenthash].js",
+        path: path.resolve(__dirname, "dist"),
+        assetModuleFilename: "assets/[ext]/[hash][ext][query]",
+        clean: true,
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: "public/index.html",
         }),
         new VueLoaderPlugin(),
     ],
-    devServer: {
-        port: 3039, // you can change the port
-        historyApiFallback: true,
-    },
-    entry: "./src/index.ts",
     module: {
         rules: [
             {
                 test: /\.m?js$/,
-                exclude: /(node_modules)/,
+                exclude: /node_modules/,
                 use: {
-                    // `.swcrc` can be used to configure swc
                     loader: "swc-loader",
                 },
             },
             {
                 test: /\.ts$/,
-                loader: "ts-loader",
-                options: {
-                    appendTsSuffixTo: [/\.vue$/],
+                use: {
+                    loader: "ts-loader",
+                    options: {
+                        appendTsSuffixTo: [/\.vue$/],
+                    },
                 },
                 exclude: /node_modules/,
             },
             {
                 test: /\.s[ac]ss$/i,
-                use: [
-                    // Creates `style` nodes from JS strings
-                    "style-loader",
-                    // Translates CSS into CommonJS
-                    "css-loader",
-                    // Compiles Sass to CSS
-                    "sass-loader",
-                ],
+                use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
                 test: /\.vue$/,
-                loader: "vue-loader",
+                use: "vue-loader",
             },
             {
-                test: /\.(png|jpg|jpeg|gif)$/i,
+                test: /\.(png|jpe?g|gif)$/i,
                 type: "asset/resource",
             },
             {
                 test: /\.svg$/,
-                use: ["swc-loader", "svg-vue3-loader"],
+                use: "svg-vue3-loader",
             },
         ],
     },
+
     resolve: {
-        extensions: [".tsx", ".ts", ".js", ".vue"],
+        extensions: [".ts", ".js", ".vue", ".tsx", ".scss", ".css"],
         alias: {
             vue: "vue/dist/vue.esm-bundler.js",
             "@": path.resolve(__dirname, "src"),
@@ -69,17 +67,23 @@ module.exports = {
             "@assets": path.resolve(__dirname, "src/assets"),
         },
     },
-    output: {
-        filename: "resources/.js/[name].js",
-        path: path.resolve(__dirname, "dist"),
-        assetModuleFilename: "resources/[ext]/[hash][ext][query]",
-        clean: true,
-    },
     optimization: {
         splitChunks: {
             chunks: "all",
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all",
+                },
+            },
         },
         minimize: true,
         minimizer: [new TerserPlugin()],
+    },
+    devServer: {
+        port: 3039,
+        historyApiFallback: true,
+        // open: true,
     },
 };
